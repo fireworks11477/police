@@ -37,7 +37,7 @@ AppAsset::register($this);
 			'items' => [
 				['label' => '学生数据管理', 'url' => ['/Admin/student/index']],
 				['label' => '教师数据管理', 'url' => ['/Admin/teacher/index']],
-				['label' => '系统参数设置', 'url' => ['/Admin/system/index']],
+				['label' => '系统参数设置', 'url' => ['/Admin/settings/index']],
 				['label' => '实验课程管理', 'url' => ['/Admin/course/index']],
 				['label' => '数据统计分析', 'url' => ['/Admin/data/index']],
 			],
