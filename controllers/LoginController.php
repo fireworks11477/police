@@ -4,11 +4,11 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Session;
-use app\controllers\CommonController;
+use app\controllers\CheckipController;
 use app\models\admin\Login;
 
 
-class LoginController extends CommonController
+class LoginController extends CheckipController
 {
 
 	public function actionLogin()
@@ -19,31 +19,39 @@ class LoginController extends CommonController
 					->where('username=:u', [':u' => $model->username])
 					->andwhere('password=:p', [':p' => md5($model->password)])
 					->one();
-			$result_teacher = (new \yii\db\Query())->select(['id','name'])->from('teacher')
+			$result_teacher = (new \yii\db\Query())->select(['id','name','open'])->from('teacher')
 					->where('username=:u', [':u' => $model->username])
 					->andwhere('password=:p', [':p' => md5($model->password)])
-					->andwhere("open='ture'")
 					->one();
-			$result_student = (new \yii\db\Query())->select(['id','name'])->from('student')
+			$result_student = (new \yii\db\Query())->select(['id','name','open'])->from('student')
 					->where('number=:u', [':u' => $model->username])
 					->andwhere('password=:p', [':p' => md5($model->password)])
-					->andwhere("open='ture'")
 					->one();
 			$session = Yii::$app->session;
+			header("Content-type:text/html;charset=utf-8");
 			if($result_admin){
 				$session['adminname'] = $result_admin['name'];
 				$session['Loginid'] = $result_admin['id'];
-				return $this->redirect(array('Admin/admin/index'));
+				return $this->redirect(array('Admin/student/index'));
 			}elseif($result_teacher){
+				if($result_teacher['open'] == 'false'){
+					echo '<script>alert("登录权限被关闭，如有疑问，请联系管理员");
+						window.location.href="index.php?r=login/login"</script>';exit;
+				}
 				$session['teachername'] = $result_teacher['name'];
 				$session['Loginid'] = $result_teacher['id'];
 				echo 'teacher';
 			}elseif($result_student){
+				if($result_student['open'] == 'false'){
+					echo '<script>alert("登录权限被关闭，如有疑问，请联系管理员");
+						window.location.href="index.php?r=login/login"</script>';exit;
+				}
 				$session['studentname'] = $result_student['name'];
 				$session['Loginid'] = $result_student['id'];
 				echo 'student';
 			}else{
-				echo '<script>alert("用户名或密码错误！");window.location.href="index.php?r=login/login"</script>';
+				echo '<script>alert("用户名或密码错误！");
+					window.location.href="index.php?r=login/login"</script>';exit;
 			}
         } else {
             return $this->render('index', ['model' => $model]);

@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models\admin\student;
+namespace app\models\admin\teacher;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\admin\student\Student;
+use app\models\admin\teacher\Teacher;
 
 /**
  * StudentSearch represents the model behind the search form about `app\models\student\Student`.
  */
-class StudentSearch extends Student
+class TeacherSearch extends Teacher
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class StudentSearch extends Student
     public function rules()
     {
         return [
-            [['id', 'number'], 'integer'],
+            [['id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class StudentSearch extends Student
      */
     public function search($params)
     {
-        $query = Student::find();
+        $query = Teacher::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +59,11 @@ class StudentSearch extends Student
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'number' => $this->number,
+            'id' => $this->id,
             'name' => $this->name,
         ]);
 
-        $query->andFilterWhere(['like', 'number', $this->number])
+        $query->andFilterWhere(['like', 'id', $this->id])
             ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;

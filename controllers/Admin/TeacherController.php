@@ -3,8 +3,8 @@
 namespace app\controllers\Admin;
 
 use Yii;
-use app\models\admin\student\Student;
-use app\models\admin\student\StudentSearch;
+use app\models\admin\teacher\Teacher;
+use app\models\admin\teacher\TeacherSearch;
 use app\controllers\CommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * StudentController implements the CRUD actions for Student model.
  */
-class StudentController extends CommonController
+class TeacherController extends CommonController
 {
     /**
      * @inheritdoc
@@ -35,7 +35,7 @@ class StudentController extends CommonController
      */
     public function actionIndex()
     {
-        $searchModel = new StudentSearch();
+        $searchModel = new TeacherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +63,7 @@ class StudentController extends CommonController
      */
     public function actionCreate()
     {
-        $model = new Student();
+        $model = new Teacher();
         if ($model->load(Yii::$app->request->post())) {
 			$model->password = md5($model->password);
 			$model->open = 'ture';
@@ -121,7 +121,7 @@ class StudentController extends CommonController
      */
     protected function findModel($id)
     {
-        if (($model = Student::findOne($id)) !== null) {
+        if (($model = Teacher::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -139,5 +139,4 @@ class StudentController extends CommonController
 		}
 		return $this->redirect(['index']);
 	}
-	
 }

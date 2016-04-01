@@ -1,26 +1,27 @@
 <?php
 
-namespace app\models\admin\student;
+namespace app\models\admin\teacher;
 
 use Yii;
 
 /**
- * This is the model class for table "student".
+ * This is the model class for table "teacher".
  *
  * @property integer $id
- * @property integer $number
+ * @property string $name
+ * @property string $username
  * @property string $password
  * @property string $open
- * @property string $name
+
  */
-class Student extends \yii\db\ActiveRecord
+class Teacher extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'student';
+        return 'teacher';
     }
 
     /**
@@ -29,8 +30,7 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['number', 'password', 'name'], 'required'],
-            [['number'], 'integer'],
+            [['username', 'password', 'name'], 'required'],
             [['name'], 'string', 'max' => 30],
         ];
     }
@@ -41,7 +41,7 @@ class Student extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'number' => '学号',
+            'username' => '用户名',
             'name' => '姓名',
             'open' => '允许登录',
         ];
@@ -49,10 +49,10 @@ class Student extends \yii\db\ActiveRecord
 	
 	public function Open($model){
 		if($model->open == 'ture'){
-			return '已开启'.'&nbsp; &nbsp; <a href= "index.php?r=Admin/student/open&id='.$model->id.'">
+			return '已开启'.'&nbsp; &nbsp; <a href= "index.php?r=Admin/teacher/open&id='.$model->id.'">
 				<span class="glyphicon glyphicon-remove"></span>关闭</a>';
 		}else{
-			return '已关闭'.'&nbsp; &nbsp; <a href= "index.php?r=Admin/student/open&id='.$model->id.'">
+			return '已关闭'.'&nbsp; &nbsp; <a href= "index.php?r=Admin/teacher/open&id='.$model->id.'">
 				<span class="glyphicon glyphicon-ok"></span>打开</a>';
 		}
 	}

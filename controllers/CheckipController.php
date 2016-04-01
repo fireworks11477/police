@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Session;
 use yii\web\Controller;
 
-class CommonController extends Controller
+class CheckipController extends Controller
 {
 	
 	public function __construct($id, $module, $config = [])
@@ -22,17 +22,6 @@ class CommonController extends Controller
 			echo "<script>alert('IP校验失败，如有疑问，请联系管理员！')</script>";exit;
 		}
 		
-		$session = Yii::$app->session;
-		$adminname = $session['adminname'];
-		$teachername = $session['teachername'];
-		$studentname = $session['studentname'];
-		if(!empty($adminname) or !empty($teachername) or !empty($studentname)){
-			
-		}else{
-			header("Content-type:text/html;charset=utf-8");
-			echo '<script>alert("请先登录！");window.location.href="index.php?r=login/login"</script>';exit;
-		}
 	}
-	
 	
 }
