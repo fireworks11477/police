@@ -48,7 +48,7 @@ class TeacherSearch extends Teacher
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+		$dataProvider->getPagination()->pageSize=10;
         $this->load($params);
 
         if (!$this->validate()) {

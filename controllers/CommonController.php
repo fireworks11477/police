@@ -34,5 +34,8 @@ class CommonController extends Controller
 		}
 	}
 	
+	public function actionAbc(){
+		echo '123';exit;
+	}
 	
 }
