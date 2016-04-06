@@ -35,11 +35,11 @@ class SettingsController extends CommonController
 				$command->execute();
 			}
 			if($_POST['sql'] == 24){
-				$jobs = '0 0 * * * /usr/bin/curl http://laboratory.dev/index.php?r=login/backup';
+				$jobs = '0 0 * * * /usr/bin/curl http://laboratory.dev/index.php?r=backup/backup >> /vagrant/www/dump/wrong.php';
 			}elseif($_POST['sql'] == 12){
-				$jobs = '0 */12 * * * /usr/bin/curl http://laboratory.dev/index.php?r=login/backup';
+				$jobs = '0 */12 * * * /usr/bin/curl http://laboratory.dev/index.php?r=backup/backup >> /vagrant/www/dump/wrong.php';
 			}else{
-				$jobs = '0 0 * * 0 /usr/bin/curl http://laboratory.dev/index.php?r=login/backup';
+				$jobs = '0 0 * * 0 /usr/bin/curl http://laboratory.dev/index.php?r=backup/backup >> /vagrant/www/dump/wrong.php';
 			}
 			$output = shell_exec('echo "'.$jobs.'" | crontab -');
 			$connection = Yii::$app->db;
