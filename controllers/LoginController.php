@@ -68,4 +68,13 @@ class LoginController extends CheckipController
 		return $this->redirect(array('login'));
 	}
 	
+	
+	public function actionBackup() {
+		$username = 'root';
+		$password = 'root';
+		$database = 'laboratory';
+		$time = date("YmdHis");
+		system('mysqldump -u' . $username . ' -p' . $password . ' --database ' . $database . ' > /vagrant/www/dump/' . $time . '.sql');
+	}
+	
 }

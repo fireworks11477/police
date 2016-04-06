@@ -35,11 +35,11 @@ class SettingsController extends CommonController
 				$command->execute();
 			}
 			if($_POST['sql'] == 24){
-				$jobs = '0 0 * * *  http://laboratory.dev/index.php?r=Admin/settings/backup';
+				$jobs = '0 0 * * * /usr/bin/curl http://laboratory.dev/index.php?r=login/backup';
 			}elseif($_POST['sql'] == 12){
-				$jobs = '0 */12 * * *  http://laboratory.dev/index.php?r=Admin/settings/backup';
+				$jobs = '0 */12 * * * /usr/bin/curl http://laboratory.dev/index.php?r=login/backup';
 			}else{
-				$jobs = '0 0 * * 0  http://laboratory.dev/index.php?r=Admin/settings/backup';
+				$jobs = '0 0 * * 0 /usr/bin/curl http://laboratory.dev/index.php?r=login/backup';
 			}
 			$output = shell_exec('echo "'.$jobs.'" | crontab -');
 			$connection = Yii::$app->db;
@@ -48,15 +48,6 @@ class SettingsController extends CommonController
 			return $this->redirect(['index']);
 		}
 		
-	}
-	
-	
-	public function actionBackup() {
-		$username = 'root';
-		$password = 'root';
-		$database = 'laboratory';
-		$time = date("YmdH");
-		system('mysqldump -u' . $username . ' -p' . $password . ' --database ' . $database . ' > /vagrant/www/dump/' . $time . '.sql');
 	}
 	
 	
