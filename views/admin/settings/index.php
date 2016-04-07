@@ -1,7 +1,7 @@
 <?php
 
 $this->title = 'Settings';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 
 <br />      
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	
 	<div class="input-group">
 	  <span class="input-group-addon">修改管理员密码：</span>
-	  <input type="password" class="form-control" name="password" placeholder="password" >
+	  <input type="password" class="form-control" name="password" placeholder="为空则不做修改" >
 	</div>
 	<br/>
 	

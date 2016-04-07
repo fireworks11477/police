@@ -5,14 +5,14 @@ namespace app\controllers\Admin;
 use Yii;
 use app\models\admin\data\Data;
 use app\models\admin\data\DataSearch;
-use app\controllers\CommonController;
+use app\controllers\Common\AdminCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * DataController implements the CRUD actions for Data model.
  */
-class DataController extends CommonController
+class DataController extends AdminCommonController
 {
     /**
      * @inheritdoc

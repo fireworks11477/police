@@ -5,14 +5,14 @@ namespace app\controllers\Admin;
 use Yii;
 use app\models\admin\course\Course;
 use app\models\admin\course\CourseSearch;
-use app\controllers\CommonController;
+use app\controllers\Common\AdminCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CourseController implements the CRUD actions for Course model.
  */
-class CourseController extends CommonController
+class CourseController extends AdminCommonController
 {
     /**
      * @inheritdoc

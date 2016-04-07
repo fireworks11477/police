@@ -5,14 +5,14 @@ namespace app\controllers\Admin;
 use Yii;
 use app\models\admin\student\Student;
 use app\models\admin\student\StudentSearch;
-use app\controllers\CommonController;
+use app\controllers\Common\AdminCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * StudentController implements the CRUD actions for Student model.
  */
-class StudentController extends CommonController
+class StudentController extends AdminCommonController
 {
     /**
      * @inheritdoc

@@ -4,11 +4,11 @@ namespace app\controllers\Admin;
 
 use Yii;
 use app\models\admin\settings\settings;
-use app\controllers\CommonController;
+use app\controllers\Common\AdminCommonController;
 use app\controllers\CrontabController;
 
 
-class SettingsController extends CommonController
+class SettingsController extends AdminCommonController
 {
     public function actionIndex()
 	{

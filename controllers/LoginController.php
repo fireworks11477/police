@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Session;
-use app\controllers\CheckipController;
+use app\controllers\Common\CheckipController;
 use app\models\admin\Login;
 
 
@@ -40,7 +40,7 @@ class LoginController extends CheckipController
 				}
 				$session['teachername'] = $result_teacher['name'];
 				$session['Loginid'] = $result_teacher['id'];
-				echo 'teacher';
+				return $this->redirect(array('Teacher/information/index'));
 			}elseif($result_student){
 				if($result_student['open'] == 'false'){
 					echo '<script>alert("登录权限被关闭，如有疑问，请联系管理员");
@@ -48,7 +48,7 @@ class LoginController extends CheckipController
 				}
 				$session['studentname'] = $result_student['name'];
 				$session['Loginid'] = $result_student['id'];
-				echo 'student';
+				return $this->redirect(array('Student/information/index'));
 			}else{
 				echo '<script>alert("用户名或密码错误！");
 					window.location.href="index.php?r=login/login"</script>';exit;

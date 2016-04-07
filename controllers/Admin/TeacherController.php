@@ -5,12 +5,12 @@ namespace app\controllers\Admin;
 use Yii;
 use app\models\admin\teacher\Teacher;
 use app\models\admin\teacher\TeacherSearch;
-use app\controllers\CommonController;
+use app\controllers\Common\AdminCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 
-class TeacherController extends CommonController
+class TeacherController extends AdminCommonController
 {
     /**
      * @inheritdoc

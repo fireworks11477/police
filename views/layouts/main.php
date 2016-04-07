@@ -45,7 +45,7 @@ AppAsset::register($this);
 		echo Nav::widget([
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
-				['label' => (Yii::$app->session['adminname']), 'url' => ['/Admin/admin/index']],
+				['label' => (Yii::$app->session['adminname']), 'url' => ['/Admin/settings/index']],
 				['label' => 'Logout', 'url' => ['/login/logout']]
 			],
 		]);
@@ -63,7 +63,7 @@ AppAsset::register($this);
 		echo Nav::widget([
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
-				['label' => (Yii::$app->session['teachername']),'url' => ['/Teacher/Index/index']],
+				['label' => (Yii::$app->session['teachername']),'url' => ['/Teacher/informations/index']],
 				['label' => 'Logout', 'url' => ['/login/logout']]
 			],
 		]);
@@ -80,7 +80,7 @@ AppAsset::register($this);
 		echo Nav::widget([
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
-				['label' => (Yii::$app->session['studentname']),  'url' => ['/Student/Index/index']],
+				['label' => (Yii::$app->session['studentname']),  'url' => ['/Student/infotmayion/index']],
 				['label' => 'Logout', 'url' => ['/login/logout']]
 			],
 		]);

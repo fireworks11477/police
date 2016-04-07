@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\Common;
 
 use Yii;
 use yii\web\Session;
 use yii\web\Controller;
 
-class CheckipController extends Controller
+class TeacherCommonController extends Controller
 {
 	
 	public function __construct($id, $module, $config = [])
@@ -22,6 +22,14 @@ class CheckipController extends Controller
 			echo "<script>alert('IP校验失败，如有疑问，请联系管理员！')</script>";exit;
 		}
 		
+		$session = Yii::$app->session;
+		$teachername = $session['teachername'];
+		if(!empty($teachername)){
+			
+		}else{
+			header("Content-type:text/html;charset=utf-8");
+			echo '<script>alert("请先登录！");window.location.href="index.php?r=login/login"</script>';exit;
+		}
 	}
 	
 }

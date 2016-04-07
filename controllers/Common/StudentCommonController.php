@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\Common;
 
 use Yii;
 use yii\web\Session;
 use yii\web\Controller;
 
-class CommonController extends Controller
+class StudentCommonController extends Controller
 {
 	
 	public function __construct($id, $module, $config = [])
@@ -23,10 +23,8 @@ class CommonController extends Controller
 		}
 		
 		$session = Yii::$app->session;
-		$adminname = $session['adminname'];
-		$teachername = $session['teachername'];
 		$studentname = $session['studentname'];
-		if(!empty($adminname) or !empty($teachername) or !empty($studentname)){
+		if(!empty($studentname)){
 			
 		}else{
 			header("Content-type:text/html;charset=utf-8");
