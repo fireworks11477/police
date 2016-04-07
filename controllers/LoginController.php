@@ -14,6 +14,7 @@ class LoginController extends CheckipController
 	public function actionLogin()
 	{
 		$model = new Login();
+		$session = Yii::$app->session;
 		if ($model->load(Yii::$app->request->post())) {
 			$result_admin = (new \yii\db\Query())->select(['id','name'])->from('admin')
 					->where('username=:u', [':u' => $model->username])
@@ -27,7 +28,7 @@ class LoginController extends CheckipController
 					->where('number=:u', [':u' => $model->username])
 					->andwhere('password=:p', [':p' => md5($model->password)])
 					->one();
-			$session = Yii::$app->session;
+			
 			header("Content-type:text/html;charset=utf-8");
 			if($result_admin){
 				$session['adminname'] = $result_admin['name'];
@@ -53,9 +54,15 @@ class LoginController extends CheckipController
 				echo '<script>alert("用户名或密码错误！");
 					window.location.href="index.php?r=login/login"</script>';exit;
 			}
-        } else {
-            return $this->render('index', ['model' => $model]);
-        }
+        }elseif(!empty($session['adminname'])) {
+			return $this->render('welcome', ['name' => ($session['adminname'])]);
+		}elseif(!empty($session['teachername'])){
+			return $this->render('welcome', ['name' => ($session['teachername'])]);
+		}elseif(!empty($session['studentname'])){
+			return $this->render('welcome', ['name' => ($session['studentname'])]);	
+        }else{
+			return $this->render('index', ['model' => $model]);
+		}
 	}
 	
 	public function actionLogout()

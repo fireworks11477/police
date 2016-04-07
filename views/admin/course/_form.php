@@ -8,13 +8,14 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+
 <div class="course-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'teacher')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'teacher')->dropDownList($result) ?>
 
     <?= $form->field($model, 'content')->textInput(['maxlength' => true]) ?>
 

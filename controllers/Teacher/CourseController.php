@@ -1,18 +1,18 @@
 <?php
 
-namespace app\controllers\Admin;
+namespace app\controllers\Teacher;
 
 use Yii;
-use app\models\admin\course\Course;
-use app\models\admin\course\CourseSearch;
-use app\controllers\Common\AdminCommonController;
+use app\models\teacher\course\Course;
+use app\models\teacher\course\CourseSearch;
+use app\controllers\Common\TeacherCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CourseController implements the CRUD actions for Course model.
  */
-class CourseController extends AdminCommonController
+class CourseController extends TeacherCommonController
 {
     /**
      * @inheritdoc
@@ -35,8 +35,9 @@ class CourseController extends AdminCommonController
      */
     public function actionIndex()
     {
+		$id = Yii::$app->session['Loginid'];
         $searchModel = new CourseSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -63,20 +64,28 @@ class CourseController extends AdminCommonController
      */
     public function actionCreate()
     {
-		
+		$class = $this->Ban();
 		$result = $this->result();
         $model = new Course();
-        if ($model->load(Yii::$app->request->post())) {
-			$model->teacher_id = $model->teacher;
-			$abc = (new \yii\db\Query())->select(['id','name'])
-			->from('teacher')->where('id='.($model->teacher))->one();
-			$model->teacher = $abc['name'];
-			$model->open = 'ture';
+
+        if ($model->load(Yii::$app->request->post())){
+			
+			$abc = (new \yii\db\Query())->select(['class'])
+			->from('class')->where('id='.($model->classId))->one();
+			$qwe = (new \yii\db\Query())->select(['name'])
+			->from('course')->where('id='.($model->courseId))->one();
+			$model->teacherId = Yii::$app->session['Loginid'];
+			$model->className = $abc['class'];
+			$model->courseName = $qwe['name'];
+			$model->startTime = strtotime($model->startTime);
+			$model->endTime = strtotime($model->endTime);
 			$model->save();
+			
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'class' => $class,
                 'result' => $result,
             ]);
         }
@@ -90,20 +99,33 @@ class CourseController extends AdminCommonController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		$class = $this->Ban();
 		$result = $this->result();
-
-        if ($model->load(Yii::$app->request->post())) {
-			$model->teacher_id = $model->teacher;
-			$abc = (new \yii\db\Query())->select(['id','name'])
-			->from('teacher')->where('id='.($model->teacher))->one();
-			$model->teacher = $abc['name'];
+        $model = $this->findModel($id);
+		$starttime = $model->startTime;
+		$endtime = $model->endTime;
+        if ($model->load(Yii::$app->request->post())){
+			
+			$abc = (new \yii\db\Query())->select(['class'])
+			->from('class')->where('id='.($model->classId))->one();
+			$qwe = (new \yii\db\Query())->select(['name'])
+			->from('course')->where('id='.($model->courseId))->one();
+			$model->className = $abc['class'];
+			$model->courseName = $qwe['name'];
+			if($starttime != $model->startTime){
+				$model->startTime = strtotime($model->startTime);
+			}
+			if($endtime != $model->endTime){
+				$model->endTime = strtotime($model->endTime);
+			}
 			$model->save();
+			
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-				'result' => $result,
+                'class' => $class,
+                'result' => $result,
             ]);
         }
     }
@@ -120,7 +142,7 @@ class CourseController extends AdminCommonController
 
         return $this->redirect(['index']);
     }
-
+	
     /**
      * Finds the Course model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -137,9 +159,13 @@ class CourseController extends AdminCommonController
         }
     }
 	
+	
 	public function result(){
+		$id = Yii::$app->session['Loginid'];
 		$result_ = (new \yii\db\Query())->select(['id','name'])
-			->from('teacher')->all();
+			->from('course')->where("open = 'ture'")
+			->andwhere("teacher_id='".$id."'")
+			->all();
 		$result = array();
 		foreach($result_ as $v){
 			$result[($v['id'])] = $v['name'];
@@ -147,15 +173,14 @@ class CourseController extends AdminCommonController
 		return $result;
 	}
 	
-	public function actionOpen($id){
-		$model = $this->findModel($id);
-		if($model->open == 'ture'){
-			$model->open = 'false';
-			$model->save();
-		}else{
-			$model->open = 'ture';
-			$model->save();
+	
+	public function Ban(){
+		$result_ = (new \yii\db\Query())->select(['id','class'])
+			->from('class')->all();
+		$result = array();
+		foreach($result_ as $v){
+			$result[($v['id'])] = $v['class'];
 		}
-		return $this->redirect(['index']);
+		return $result;
 	}
 }
