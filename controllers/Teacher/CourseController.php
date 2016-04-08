@@ -104,6 +104,8 @@ class CourseController extends TeacherCommonController
         $model = $this->findModel($id);
 		$starttime = $model->startTime;
 		$endtime = $model->endTime;
+		$model->startTime = date("YmdHi",($model->startTime));
+		$model->endTime = date("YmdHi",($model->endTime));
         if ($model->load(Yii::$app->request->post())){
 			
 			$abc = (new \yii\db\Query())->select(['class'])

@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models\teacher\course;
+namespace app\models\teacher\experiment;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\teacher\course\Course;
+use app\models\teacher\experiment\Experiment;
 
 /**
- * CourseSearch represents the model behind the search form about `app\models\teacher\course\Course`.
+ * ExperimentSearch represents the model behind the search form about `app\models\teacher\experiment\Experiment`.
  */
-class CourseSearch extends Course
+class ExperimentSearch extends Experiment
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class CourseSearch extends Course
     public function rules()
     {
         return [
-            [['id', 'courseId', 'startTime', 'endTime', 'classId'], 'integer'],
-		     [['courseName', 'className'], 'safe'],
+            [['id', 'courseId', 'grade'], 'integer'],
+            [['courseName', 'student'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CourseSearch extends Course
      */
     public function search($params,$id)
     {
-        $query = Course::find()->where('teacherId ='.$id);
+        $query = Experiment::find()->where("courseId in('".$id."')");
 
         // add conditions that should always apply here
 
@@ -50,7 +50,7 @@ class CourseSearch extends Course
         ]);
 		$dataProvider->getPagination()->pageSize=10;
         $this->load($params);
-
+		
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -60,7 +60,7 @@ class CourseSearch extends Course
         // grid filtering conditions
 
         $query->andFilterWhere(['like', 'courseName', $this->courseName])
-			->andFilterWhere(['like', 'className', $this->className]);
+            ->andFilterWhere(['like', 'student', $this->student]);
 
         return $dataProvider;
     }

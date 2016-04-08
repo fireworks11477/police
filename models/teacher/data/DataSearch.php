@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models\teacher\course;
+namespace app\models\teacher\data;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\teacher\course\Course;
+use app\models\teacher\data\Data;
 
 /**
- * CourseSearch represents the model behind the search form about `app\models\teacher\course\Course`.
+ * DataSearch represents the model behind the search form about `app\models\admin\data\Data`.
  */
-class CourseSearch extends Course
+class DataSearch extends Data
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ class CourseSearch extends Course
     public function rules()
     {
         return [
-            [['id', 'courseId', 'startTime', 'endTime', 'classId'], 'integer'],
-		     [['courseName', 'className'], 'safe'],
+            [['courseName', 'courseResult', 'student'], 'safe'],
         ];
     }
 
@@ -39,9 +38,9 @@ class CourseSearch extends Course
      *
      * @return ActiveDataProvider
      */
-    public function search($params,$id)
+    public function search($params)
     {
-        $query = Course::find()->where('teacherId ='.$id);
+        $query = Data::find();
 
         // add conditions that should always apply here
 
@@ -58,9 +57,14 @@ class CourseSearch extends Course
         }
 
         // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'grade' => $this->grade,
+        ]);
 
         $query->andFilterWhere(['like', 'courseName', $this->courseName])
-			->andFilterWhere(['like', 'className', $this->className]);
+            ->andFilterWhere(['like', 'courseResult', $this->courseResult])
+            ->andFilterWhere(['like', 'student', $this->student]);
 
         return $dataProvider;
     }
