@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Experiments';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 <div class="experiment-index">
 
@@ -22,6 +22,16 @@ $this->params['breadcrumbs'][] = $this->title;
 			'student',
             'courseName',
             'courseResult',
+			array(
+				'label' => '消耗时间',
+				'format' => 'raw',
+				'value' => function($model){
+					$time = $model->cost;
+					$minutes = floor($time/60);
+					$time = ($time%60);
+					return $minutes.'分'.$time.'秒';
+				}
+			),
             array(
 				'label' => '评分',
 				'format' => 'raw',

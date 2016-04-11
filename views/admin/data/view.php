@@ -34,7 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'grade',
 				'format' => 'raw',
 				'value'=> $model->Grade($model),
-			]
+			],
+			[
+				'attribute' => 'cost',
+				'format' => 'raw',
+				'value' => $model->Cost($model)
+			],
         ],
     ]) ?>
 

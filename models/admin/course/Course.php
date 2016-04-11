@@ -28,7 +28,7 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'teacher','lenght'], 'required'],
+            [['name', 'teacher'], 'required'],
             [['name', 'teacher'], 'string', 'max' => 30],
             [['content'], 'string', 'max' => 500],
         ];
@@ -43,7 +43,6 @@ class Course extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => '课程名称',
             'teacher' => '授课教师',
-            'lenght' => '课程长度',
             'content' => '课程内容',
             'open' => '课程状态',
         ];
@@ -60,12 +59,4 @@ class Course extends \yii\db\ActiveRecord
 		}
 	}
 	
-	public function Lenght($model)
-	{
-		if($model->lenght == '3600'){
-			return '一小时';
-		}else{
-			return '两小时';
-		}
-	}
 }

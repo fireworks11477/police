@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models\admin\course;
+namespace app\models\student\start;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\admin\course\Course;
+use app\models\student\start\Start;
 
 /**
  * CourseSearch represents the model behind the search form about `app\models\admin\course\Course`.
  */
-class CourseSearch extends Course
+class StartSearch extends Start
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class CourseSearch extends Course
      */
     public function search($params)
     {
-        $query = Course::find();
+        $query = Start::find()->where("open = 'ture'");
 
         // add conditions that should always apply here
 
@@ -57,14 +57,9 @@ class CourseSearch extends Course
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'teacher', $this->teacher])
-            ->andFilterWhere(['like', 'content', $this->content]);
+            ->andFilterWhere(['like', 'teacher', $this->teacher]);
 
         return $dataProvider;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\teacher\data;
+namespace app\models\student\course;
 
 use Yii;
 
@@ -9,11 +9,13 @@ use Yii;
  *
  * @property integer $id
  * @property string $courseName
+ * @property integer $courseId
  * @property string $courseResult
  * @property string $student
+ * @property integer $studentId
  * @property integer $grade
  */
-class Data extends \yii\db\ActiveRecord
+class Course extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -23,6 +25,9 @@ class Data extends \yii\db\ActiveRecord
         return 'courseGrade';
     }
 
+    /**
+     * @inheritdoc
+     */
 
     /**
      * @inheritdoc
@@ -52,4 +57,5 @@ class Data extends \yii\db\ActiveRecord
 		$time = ($time%60);
 		return $minutes.'分'.$time.'秒';
 	}
+	
 }

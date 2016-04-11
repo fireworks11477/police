@@ -29,18 +29,6 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
             'teacher',
 			'content',
 			array(
-				'label'=>'课程长度',
-				'format'=>'raw',
-				'value'=>function($model){
-					if($model->lenght == '3600'){
-						return '一小时';
-					}else{
-						return '两小时';
-					}
-					
-				}
-			),
-			array(
 				'label'=>'课程状态',
 				'format'=>'raw',
 				'value'=>function($model){

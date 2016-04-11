@@ -23,14 +23,24 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
             'courseName',
             'courseResult',
             'student',
+			array(
+				'label' => '消耗时间',
+				'format' => 'raw',
+				'value' => function($model){
+					$time = $model->cost;
+					$minutes = floor($time/60);
+					$time = ($time%60);
+					return $minutes.'分'.$time.'秒';
+				}
+			),
             array(
 				'label'=>'教师评分',
 				'format'=>'raw',
 				'value'=>function($model){
-					if($model->grade != ''){
-						return $model->grade;
-					}else{
+					if($model->grade === null){
 						return '教师暂未评分';
+					}else{
+						return $model->grade;
 					}
 					
 				}

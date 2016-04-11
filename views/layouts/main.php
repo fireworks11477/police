@@ -65,7 +65,7 @@ AppAsset::register($this);
 		echo Nav::widget([
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
-				['label' => (Yii::$app->session['teachername']),'url' => ['/Teacher/informations/index']],
+				['label' => (Yii::$app->session['teachername']),'url' => ['/Teacher/information/index']],
 				['label' => 'Logout', 'url' => ['/login/logout']]
 			],
 		]);
@@ -76,13 +76,13 @@ AppAsset::register($this);
 				['label' => '我的个人信息', 'url' => ['/Student/information/index']],
 				['label' => '我完成的实验', 'url' => ['/Student/course/index']],
 				['label' => '开始实验', 'url' => ['/Student/start/index']],
-				['label' => '疑问与反馈', 'url' => ['/Teacher/feedback/index']],
+				['label' => '疑问与反馈', 'url' => ['/Student/feedback/index']],
 			],
 		]);
 		echo Nav::widget([
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
-				['label' => (Yii::$app->session['studentname']),  'url' => ['/Student/infotmayion/index']],
+				['label' => (Yii::$app->session['studentname']),  'url' => ['/Student/information/index']],
 				['label' => 'Logout', 'url' => ['/login/logout']]
 			],
 		]);

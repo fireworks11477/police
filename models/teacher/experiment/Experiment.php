@@ -36,6 +36,7 @@ class Experiment extends \yii\db\ActiveRecord
             'courseResult' => '实验结果',
             'student' => '学生',
             'grade' => '评分',
+			'cost' => '消耗时间',
         ];
     }
 	
@@ -54,5 +55,12 @@ class Experiment extends \yii\db\ActiveRecord
 				<input type="submit" value="修改" />
 			</form>';
 		}
+	}
+	
+	public function Cost($model){
+		$time = $model->cost;
+		$minutes = floor($time/60);
+		$time = ($time%60);
+		return $minutes.'分'.$time.'秒';
 	}
 }

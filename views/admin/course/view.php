@@ -33,11 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'teacher',
 			'content',
 			[
-				'attribute' => 'lenght',
-				'format' => 'raw',
-				'value'=> $model->Lenght($model),
-			],
-			[
 				'attribute' => 'open',
 				'format' => 'raw',
 				'value'=> $model->Open($model),
