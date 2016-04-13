@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\admin\data\Data */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Datas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '数据统计', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="data-view">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',

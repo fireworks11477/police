@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\admin\data\DataSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Datas';
+$this->title = '数据统计';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 <div class="data-index">

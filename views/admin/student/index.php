@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\student\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Students';
+$this->title = '学生信息表';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 <div class="student-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Student', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新增学生', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,6 +24,24 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
             ['class' => 'yii\grid\SerialColumn'],
             'number',
 			'name',
+			array(
+				'label'=>'专业',
+				'format'=>'raw',
+				'value'=>function($model){
+					$result = (new \yii\db\Query())->select(['department'])->from('department')
+					->where('id=:u', [':u' => $model->department])->one();
+					return $result['department'];
+				}
+			),
+			array(
+				'label'=>'班级',
+				'format'=>'raw',
+				'value'=>function($model){
+					$result = (new \yii\db\Query())->select(['class'])->from('class')
+					->where('id=:u', [':u' => $model->class])->one();
+					return $result['class'];
+				}
+			),
             array(
 				'label'=>'允许登录',
 				'format'=>'raw',

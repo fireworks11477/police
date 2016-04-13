@@ -45,13 +45,12 @@ class Course extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'courseId' => 'Course ID',
+            'courseId' => '课程名称',
             'courseName' => '课程名称',
             'className' => '班级',
-			'teacherId' => 'Teacher ID',
 			'startTime' => '开始时间',
 			'endTime' => '结束时间',
-			'classId' => 'Class ID',
+			'classId' => '班级',
         ];
     }
 	

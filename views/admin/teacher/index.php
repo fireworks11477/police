@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\student\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Teachers';
+$this->title = '教师信息表';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 <div class="student-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Teacher', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新增教师', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

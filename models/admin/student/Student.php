@@ -29,7 +29,7 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['number', 'password', 'name'], 'required'],
+            [['number', 'password', 'name','class'], 'required'],
             [['number'], 'integer'],
             [['name'], 'string', 'max' => 30],
         ];
@@ -44,6 +44,9 @@ class Student extends \yii\db\ActiveRecord
             'number' => '学号',
             'name' => '姓名',
             'open' => '允许登录',
+            'password' => '密码',
+            'department' => '专业',
+            'class' => '班级',
         ];
     }
 	
@@ -57,4 +60,18 @@ class Student extends \yii\db\ActiveRecord
 		}
 	}
 	
+	
+	
+	public function Classs($model){
+		$result = (new \yii\db\Query())->select(['class'])->from('class')
+			->where('id=:u', [':u' => $model->class])->one();
+			return $result['class'];
+	}
+	
+	
+	public function Department($model){
+		$result = (new \yii\db\Query())->select(['department'])->from('department')
+			->where('id=:u', [':u' => $model->department])->one();
+		return $result['department'];
+	}
 }

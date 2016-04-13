@@ -42,6 +42,7 @@ class StudentController extends AdminCommonController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+		return $this->render('abc');
     }
 
     /**
@@ -64,7 +65,17 @@ class StudentController extends AdminCommonController
     public function actionCreate()
     {
         $model = new Student();
+		$class = (new \yii\db\Query())->from('class')->all();
+		foreach($class as $v){
+			$classs[($v['id'])] = $v['class'];
+		}
         if ($model->load(Yii::$app->request->post())) {
+			$rows = (new \yii\db\Query())->from('student')
+				->where(['number' => ($model->number)])->one();
+			if($rows){
+				echo '<script>alert("该学号已存在");
+					window.location.href="index.php?r=Admin/student/create"</script>';exit;
+			}
 			$model->password = md5($model->password);
 			$model->open = 'ture';
 			$model->save();
@@ -72,6 +83,7 @@ class StudentController extends AdminCommonController
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'class' => $classs,
             ]);
         }
     }
@@ -86,7 +98,18 @@ class StudentController extends AdminCommonController
     {
         $model = $this->findModel($id);
 		$password = $model->password;
+		$number = $model->number;
+		$class = (new \yii\db\Query())->from('class')->all();
+		foreach($class as $v){
+			$classs[($v['id'])] = $v['class'];
+		}
         if ($model->load(Yii::$app->request->post())) {
+			$rows = (new \yii\db\Query())->from('student')
+				->where(['number' => ($model->number)])->one();
+			if($rows and ($model->number) != $number){
+				echo '<script>alert("该学号已存在");
+					window.location.href="index.php?r=Admin/student/update&id='.$id.'"</script>';exit;
+			}
 			if($model->password != $password){
 				$model->password = md5($model->password);
 			}
@@ -95,6 +118,7 @@ class StudentController extends AdminCommonController
         } else {
             return $this->render('update', [
                 'model' => $model,
+				'class' => $classs,
             ]);
         }
     }

@@ -63,6 +63,12 @@ class TeacherController extends AdminCommonController
     {
         $model = new Teacher();
         if ($model->load(Yii::$app->request->post())) {
+			$rows = (new \yii\db\Query())->from('teacher')
+				->where(['username' => ($model->username)])->one();
+			if($rows){
+				echo '<script>alert("该用户名已存在");
+					window.location.href="index.php?r=Admin/teacher/create"</script>';exit;
+			}
 			$model->password = md5($model->password);
 			$model->open = 'ture';
 			$model->save();
@@ -84,7 +90,14 @@ class TeacherController extends AdminCommonController
     {
         $model = $this->findModel($id);
 		$password = $model->password;
+		$username = $model->username;
         if ($model->load(Yii::$app->request->post())) {
+			$rows = (new \yii\db\Query())->from('teacher')
+				->where(['username' => ($model->username)])->one();
+			if($rows and ($model->username) != $username){
+				echo '<script>alert("该用户名已存在");
+					window.location.href="index.php?r=Admin/teacher/update&id='.$id.'"</script>';exit;
+			}
 			if($model->password != $password){
 				$model->password = md5($model->password);
 			}

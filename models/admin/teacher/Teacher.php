@@ -44,6 +44,7 @@ class Teacher extends \yii\db\ActiveRecord
             'username' => '用户名',
             'name' => '姓名',
             'open' => '允许登录',
+            'password' => '密码',
         ];
     }
 	
