@@ -13,7 +13,16 @@ class BackupController extends Controller
 		$password = 'root';
 		$database = 'laboratory';
 		$time = date("YmdHis");
-		system('mysqldump -u' . $username . ' -p' . $password . ' --database ' . $database . ' > /vagrant/www/dump/' . $time . '.sql');
+		$dir="../dump/";
+		$file=scandir($dir);
+		foreach($file as $v){
+			$v2 = strtotime(substr($v,0,14));
+			$t = time();
+			if(($v2+30*3600*24) < $t){
+				unlink($dir.$v);
+			}
+		}
+		system('mysqldump -u' . $username . ' -p' . $password . ' --database ' . $database . ' > /vagrant/www/laboratory/dump/' . $time . '.sql');
 	}
 	
 }

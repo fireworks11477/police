@@ -25,7 +25,8 @@ class StartController extends StudentCommonController
 	
 	public $enableCsrfValidation = false;
 	
-	public function actionStart($id){
+	public function actionStart($id)
+	{
 		$open = (new \yii\db\Query())->from('course')
 			->where('id=:status', [':status' => $id])
 			->andwhere(['open' => 'ture'])->one();
@@ -54,7 +55,8 @@ class StartController extends StudentCommonController
 	}
 
 	
-	public function actionCreate($id,$time){
+	public function actionCreate($id,$time)
+	{
 		if($_POST['result'] != ''){
 			$name = (new \yii\db\Query())->select(['name'])->from('course')
 			->where('id=:status', [':status' => $id])
