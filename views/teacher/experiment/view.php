@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\teacher\experiment\Experiment */
 
 $this->title = $model->courseName;
-$this->params['breadcrumbs'][] = ['label' => 'Experiments', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '实验评分', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="experiment-view">
@@ -15,11 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= $model->courseName; ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '确定要删除该次实验记录?',
                 'method' => 'post',
             ],
         ]) ?>

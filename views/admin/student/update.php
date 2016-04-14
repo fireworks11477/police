@@ -8,7 +8,7 @@ use yii\helpers\Html;
 $this->title = '修改学生: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => '学生信息表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '修改';
 ?>
 <div class="student-update">
 
@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
         'class' => $class,
+        'de' => $de,
     ]) ?>
 
 </div>

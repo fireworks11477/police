@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Start experiment';
+$this->title = '开始实验';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 
 ?>

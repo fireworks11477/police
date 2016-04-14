@@ -1,6 +1,6 @@
 <?php
 
-$this->title = 'Settings';
+$this->title = '系统参数设置';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 

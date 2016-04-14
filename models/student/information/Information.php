@@ -41,8 +41,8 @@ class Information extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => 'Name',
-            'password' => 'Password',
+            'name' => '姓名',
+            'password' => '登录密码',
         ];
     }
 }

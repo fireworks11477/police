@@ -42,9 +42,9 @@ class Information extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'username' => 'Username',
-            'password' => 'Password',
+            'name' => '姓名',
+            'username' => '用户名',
+            'password' => '密码',
         ];
     }
 }

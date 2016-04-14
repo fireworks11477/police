@@ -19,7 +19,7 @@ class CourseSearch extends Course
     {
         return [
             [['id', 'courseId', 'startTime', 'endTime', 'classId'], 'integer'],
-		     [['courseName', 'className'], 'safe'],
+		     [['courseName'], 'safe'],
         ];
     }
 
@@ -59,8 +59,7 @@ class CourseSearch extends Course
 
         // grid filtering conditions
 
-        $query->andFilterWhere(['like', 'courseName', $this->courseName])
-			->andFilterWhere(['like', 'className', $this->className]);
+        $query->andFilterWhere(['like', 'courseName', $this->courseName]);
 
         return $dataProvider;
     }

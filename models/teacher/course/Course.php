@@ -32,9 +32,9 @@ class Course extends \yii\db\ActiveRecord
 	public function rules() 
 		   { 
 		       return [ 
-		           [['courseId', 'courseName', 'teacherId', 'startTime', 'endTime', 'className', 'classId'], 'required'], 
+		           [['courseId', 'courseName', 'teacherId', 'startTime', 'endTime', 'classId','departmentId'], 'required'], 
 		           [['courseId', 'startTime', 'endTime', 'classId'], 'integer'], 
-		           [['courseName', 'className'], 'string', 'max' => 30], 
+		           [['courseName'], 'string', 'max' => 30], 
 		           [['teacherId'], 'string', 'max' => 10], 
 		       ]; 
 		   } 
@@ -47,10 +47,10 @@ class Course extends \yii\db\ActiveRecord
             'id' => 'ID',
             'courseId' => '课程名称',
             'courseName' => '课程名称',
-            'className' => '班级',
 			'startTime' => '开始时间',
 			'endTime' => '结束时间',
 			'classId' => '班级',
+			'departmentId' => '专业',
         ];
     }
 	
@@ -61,4 +61,17 @@ class Course extends \yii\db\ActiveRecord
 	public function Etime($model){
 		return date("Y-m-d H:i:s",($model->endTime));
 	}
+	
+	public function Classs($model){
+		$result = (new \yii\db\Query())->select(['class'])->from('class')
+			->where('id=:u', [':u' => $model->classId])->one();
+			return $result['class'];
+	}
+	
+	public function Department($model){
+		$result = (new \yii\db\Query())->select(['department'])->from('department')
+			->where('id=:u', [':u' => $model->departmentId])->one();
+		return $result['department'];
+	}
+	
 }

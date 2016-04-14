@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Information';
+$this->title = '个人信息';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 ?>
 

@@ -42,7 +42,7 @@ class StudentController extends AdminCommonController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-		return $this->render('abc');
+		//return $this->render('abc');
     }
 
     /**
@@ -65,9 +65,13 @@ class StudentController extends AdminCommonController
     public function actionCreate()
     {
         $model = new Student();
-		$class = (new \yii\db\Query())->from('class')->all();
+		$department = (new \yii\db\Query())->from('department')->all();
+		$class = (new \yii\db\Query())->from('class')->where('departmentId=1')->all();
 		foreach($class as $v){
 			$classs[($v['id'])] = $v['class'];
+		}
+		foreach($department as $v){
+			$de[($v['id'])] = $v['department'];
 		}
         if ($model->load(Yii::$app->request->post())) {
 			$rows = (new \yii\db\Query())->from('student')
@@ -84,6 +88,7 @@ class StudentController extends AdminCommonController
             return $this->render('create', [
                 'model' => $model,
                 'class' => $classs,
+                'de' => $de,
             ]);
         }
     }
@@ -99,9 +104,13 @@ class StudentController extends AdminCommonController
         $model = $this->findModel($id);
 		$password = $model->password;
 		$number = $model->number;
-		$class = (new \yii\db\Query())->from('class')->all();
+		$class = (new \yii\db\Query())->from('class')->where('departmentId='.($model->department))->all();
+		$department = (new \yii\db\Query())->from('department')->all();
 		foreach($class as $v){
 			$classs[($v['id'])] = $v['class'];
+		}
+		foreach($department as $v){
+			$de[($v['id'])] = $v['department'];
 		}
         if ($model->load(Yii::$app->request->post())) {
 			$rows = (new \yii\db\Query())->from('student')
@@ -119,6 +128,7 @@ class StudentController extends AdminCommonController
             return $this->render('update', [
                 'model' => $model,
 				'class' => $classs,
+				'de' => $de,
             ]);
         }
     }
@@ -152,7 +162,8 @@ class StudentController extends AdminCommonController
         }
     }
 	
-	public function actionOpen($id){
+	public function actionOpen($id)
+	{
 		$model = $this->findModel($id);
 		if($model->open == 'ture'){
 			$model->open = 'false';
@@ -162,6 +173,22 @@ class StudentController extends AdminCommonController
 			$model->save();
 		}
 		return $this->redirect(['index']);
+	}
+	
+	public function actionCategory($id)
+	{
+		if(Yii::$app->request->isAjax){	
+            $rows = (new \yii\db\Query())->select(['id','class'])->from('class')
+					->where('departmentId=:u', [':u' => $id])->all();
+			$result = array();
+			foreach($rows as $v){
+				$result[($v['id'])] = $v['class'];
+			}
+			return json_encode($rows);
+        } 
+        else { 
+             return $this->redirect(['index']);
+        } 
 	}
 	
 }

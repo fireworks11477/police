@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\teacher\course\Course */
 
-$this->title = 'Create Course';
-$this->params['breadcrumbs'][] = ['label' => 'Courses', 'url' => ['index']];
+$this->title = '创建课程排班';
+$this->params['breadcrumbs'][] = ['label' => '课程排班', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="course-create">
@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'class' => $class,
         'result' => $result,
+		'de' => $de,
     ]) ?>
 
 </div>

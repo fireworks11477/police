@@ -19,6 +19,8 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
 	<script language="javascript" type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+	<script language="javascript" type="text/javascript" src="/css/index.js"></script>
+	<link href="/css/style.css" rel="stylesheet">
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -48,7 +50,7 @@ AppAsset::register($this);
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
 				['label' => (Yii::$app->session['adminname']), 'url' => ['/Admin/settings/index']],
-				['label' => 'Logout', 'url' => ['/login/logout']]
+				['label' => '退出', 'url' => ['/login/logout']]
 			],
 		]);
 	}elseif(Yii::$app->session['teachername'] != ''){
@@ -66,7 +68,7 @@ AppAsset::register($this);
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
 				['label' => (Yii::$app->session['teachername']),'url' => ['/Teacher/information/index']],
-				['label' => 'Logout', 'url' => ['/login/logout']]
+				['label' => '退出', 'url' => ['/login/logout']]
 			],
 		]);
 	}elseif(Yii::$app->session['studentname'] != ''){
@@ -83,7 +85,7 @@ AppAsset::register($this);
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => [
 				['label' => (Yii::$app->session['studentname']),  'url' => ['/Student/information/index']],
-				['label' => 'Logout', 'url' => ['/login/logout']]
+				['label' => '退出', 'url' => ['/login/logout']]
 			],
 		]);
 	}
@@ -97,6 +99,8 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
+<div id="loading">
+<div>
 
 <?php $this->endBody() ?>
 </body>

@@ -64,18 +64,21 @@ class CourseController extends TeacherCommonController
      */
     public function actionCreate()
     {
-		$class = $this->Ban();
 		$result = $this->result();
         $model = new Course();
-
+		$department = (new \yii\db\Query())->from('department')->all();
+		$class = (new \yii\db\Query())->from('class')->where('departmentId=1')->all();
+		foreach($class as $v){
+			$classs[($v['id'])] = $v['class'];
+		}
+		foreach($department as $v){
+			$de[($v['id'])] = $v['department'];
+		}
         if ($model->load(Yii::$app->request->post())){
 			
-			$abc = (new \yii\db\Query())->select(['class'])
-			->from('class')->where('id='.($model->classId))->one();
 			$qwe = (new \yii\db\Query())->select(['name'])
 			->from('course')->where('id='.($model->courseId))->one();
 			$model->teacherId = Yii::$app->session['Loginid'];
-			$model->className = $abc['class'];
 			$model->courseName = $qwe['name'];
 			$model->startTime = strtotime($model->startTime);
 			$model->endTime = strtotime($model->endTime);
@@ -85,7 +88,8 @@ class CourseController extends TeacherCommonController
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'class' => $class,
+                'class' => $classs,
+                'de' => $de,
                 'result' => $result,
             ]);
         }
@@ -99,20 +103,24 @@ class CourseController extends TeacherCommonController
      */
     public function actionUpdate($id)
     {
-		$class = $this->Ban();
 		$result = $this->result();
         $model = $this->findModel($id);
 		$starttime = $model->startTime;
 		$endtime = $model->endTime;
 		$model->startTime = date("YmdHi",($model->startTime));
 		$model->endTime = date("YmdHi",($model->endTime));
+		$department = (new \yii\db\Query())->from('department')->all();
+		$class = (new \yii\db\Query())->from('class')->where('departmentId='.($model->departmentId))->all();
+		foreach($class as $v){
+			$classs[($v['id'])] = $v['class'];
+		}
+		foreach($department as $v){
+			$de[($v['id'])] = $v['department'];
+		}
         if ($model->load(Yii::$app->request->post())){
 			
-			$abc = (new \yii\db\Query())->select(['class'])
-			->from('class')->where('id='.($model->classId))->one();
 			$qwe = (new \yii\db\Query())->select(['name'])
 			->from('course')->where('id='.($model->courseId))->one();
-			$model->className = $abc['class'];
 			$model->courseName = $qwe['name'];
 			if($starttime != $model->startTime){
 				$model->startTime = strtotime($model->startTime);
@@ -126,8 +134,9 @@ class CourseController extends TeacherCommonController
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'class' => $class,
+                'class' => $classs,
                 'result' => $result,
+                'de' => $de,
             ]);
         }
     }
@@ -176,13 +185,20 @@ class CourseController extends TeacherCommonController
 	}
 	
 	
-	public function Ban(){
-		$result_ = (new \yii\db\Query())->select(['id','class'])
-			->from('class')->all();
-		$result = array();
-		foreach($result_ as $v){
-			$result[($v['id'])] = $v['class'];
-		}
-		return $result;
+	public function actionCategory($id)
+	{
+		if(Yii::$app->request->isAjax){	
+            $rows = (new \yii\db\Query())->select(['id','class'])->from('class')
+					->where('departmentId=:u', [':u' => $id])->all();
+			$result = array();
+			foreach($rows as $v){
+				$result[($v['id'])] = $v['class'];
+			}
+			return json_encode($rows);
+        } 
+        else { 
+             return $this->redirect(['index']);
+        } 
 	}
+	
 }

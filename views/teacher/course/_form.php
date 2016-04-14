@@ -25,12 +25,41 @@ use yii\widgets\ActiveForm;
 			'onFocus' => "WdatePicker({lang:'zh-cn',dateFmt:'yyyyMMddHHmm'})"
 	]) ?>
 
-    <?= $form->field($model, 'classId')->dropDownList($class) ?>
+   <?= $form->field($model, 'departmentId')->dropDownList($de,['onchange'=>'abc(this.value)']) ?>
+	
+	<div id="banji" class="form-group field-student-class"><?= $form->field($model, 'classId')->dropDownList($class) ?></div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? '添加' : '修改', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script type="text/javascript">
+function abc(value){
+	//alert(value);
+	$.ajax({
+	   type:"GET",
+	   url:'index.php?r=Teacher/course/category&id='+value,
+	   dataType:'json',
+	   
+	   success:function(json){
+	    //alert(json);return false;
+			if(json == ''){return false;}
+			$('banji select').remove();
+			var str = '';
+			str +='<label class="control-label" for="course-classid">班级</label>';
+			str +='<select name="Course[classId]" class="form-control" id="course-classid" >';
+				for(var i = 0;i<json.length;i++){
+					str +='<option value="'+json[i].id+'">'+json[i]['class']+'</option>';
+				}
+			str +='</select>';
+			$('#banji').html(str);
+			//$("#loading").html('');
+	   }
+	});
+	return false;
+}
+</script>

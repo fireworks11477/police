@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\teacher\information\Information */
 
-$this->title = 'Update Information: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Informations', 'url' => ['index']];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = '修改个人信息';
+$this->params['breadcrumbs'][] = ['label' => '个人信息', 'url' => ['index']];
+$this->params['breadcrumbs'][] = '修改';
 ?>
 <div class="information-update">
 
