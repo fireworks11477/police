@@ -33,7 +33,6 @@ class Course extends \yii\db\ActiveRecord
 		   { 
 		       return [ 
 		           [['courseId', 'courseName', 'teacherId', 'startTime', 'endTime', 'classId','departmentId'], 'required'], 
-		           [['courseId', 'startTime', 'endTime', 'classId'], 'integer'], 
 		           [['courseName'], 'string', 'max' => 30], 
 		           [['teacherId'], 'string', 'max' => 10], 
 		       ]; 

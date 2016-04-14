@@ -107,8 +107,8 @@ class CourseController extends TeacherCommonController
         $model = $this->findModel($id);
 		$starttime = $model->startTime;
 		$endtime = $model->endTime;
-		$model->startTime = date("YmdHi",($model->startTime));
-		$model->endTime = date("YmdHi",($model->endTime));
+		$model->startTime = date("Y/m/d H:i",($model->startTime));
+		$model->endTime = date("Y/m/d H:i",($model->endTime));
 		$department = (new \yii\db\Query())->from('department')->all();
 		$class = (new \yii\db\Query())->from('class')->where('departmentId='.($model->departmentId))->all();
 		foreach($class as $v){

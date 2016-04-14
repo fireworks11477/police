@@ -16,19 +16,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'startTime')->textInput([
 			'class' => 'Wdate form-control',
-			'onFocus' => "WdatePicker({lang:'zh-cn',dateFmt:'yyyyMMddHHmm'})"
+			'onFocus' => "WdatePicker({lang:'zh-cn',dateFmt:'yyyy/MM/dd HH:mm'})"
 	]) ?>
 	
 
     <?= $form->field($model, 'endTime')->textInput([
 			'class' => 'Wdate form-control',
-			'onFocus' => "WdatePicker({lang:'zh-cn',dateFmt:'yyyyMMddHHmm'})"
+			'onFocus' => "WdatePicker({lang:'zh-cn',dateFmt:'yyyy/MM/dd HH:mm'})"
 	]) ?>
 
    <?= $form->field($model, 'departmentId')->dropDownList($de,['onchange'=>'abc(this.value)']) ?>
 	
 	<div id="banji" class="form-group field-student-class"><?= $form->field($model, 'classId')->dropDownList($class) ?></div>
-
+	
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '添加' : '修改', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

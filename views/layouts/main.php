@@ -18,7 +18,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-	<script language="javascript" type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+	<script language="javascript" type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>	
 	<script language="javascript" type="text/javascript" src="/css/index.js"></script>
 	<link href="/css/style.css" rel="stylesheet">
     <title><?= Html::encode($this->title) ?></title>
