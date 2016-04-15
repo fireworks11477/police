@@ -14,8 +14,13 @@ class StartController extends StudentCommonController
 {
 	public function actionIndex()
     {
-        $searchModel = new StartSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $student_id = Yii::$app->session['Loginid'];
+		$class = (new \yii\db\Query())->from('student')
+			->where('id='.$student_id)->one();
+		$classId = $class['class'];
+		
+		$searchModel = new StartSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$classId);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -32,20 +37,19 @@ class StartController extends StudentCommonController
 			->andwhere(['open' => 'ture'])->one();
 		if($open){
 			$time = time();
-			$start = (new \yii\db\Query())->from('scheduling')
-			->where('courseId=:status', [':status' => ($open['id'])])->one();
-			if($start['startTime'] < $time && $start['endTime'] > $time){
-				$student_id = Yii::$app->session['Loginid'];
-				$class = (new \yii\db\Query())->from('student')
+			$student_id = Yii::$app->session['Loginid'];
+			$class = (new \yii\db\Query())->from('student')
 					->where('id='.$student_id)->one();
-				if($class['class'] == $start['classId']){
-					return $this->render('start',['time'=>$time,'open'=>$open]);
-				}else{
-					echo '<script>alert("学生班级不符");
-					window.location.href="index.php?r=Student/start/index"</script>';exit;
-				}
+			$classId = $class['class'];
+			$start = (new \yii\db\Query())->from('scheduling')
+			->where('courseId=:status', [':status' => $id])
+			->andwhere("classId = '$classId'")
+			->andwhere("startTime < '$time'")
+			->andwhere("endTime > '$time'")->all();
+			if($start){
+				return $this->render('start',['time'=>$time,'open'=>$open]);
 			}else{
-				echo '<script>alert("课程还未开始");
+				echo '<script>alert("排课时间不符或学生班级不符");
 					window.location.href="index.php?r=Student/start/index"</script>';exit;
 			}
 		}else{

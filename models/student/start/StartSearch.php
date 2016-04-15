@@ -39,10 +39,25 @@ class StartSearch extends Start
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$classId)
     {
-        $query = Start::find()->where("open = 'ture'");
-
+		$time = time();
+		$subQuery = (new \yii\db\Query())->from('scheduling')
+			->where("classId = '$classId'")
+			->andwhere("startTime < '$time'")
+			->andwhere("endTime > '$time'")
+			->all();
+        $query = Start::find()->where("open = 'ture'")
+			->leftJoin('scheduling', 'scheduling.courseId = course.id')
+			->where("classId = '$classId'")
+			->andwhere("startTime < '$time'")
+			->andwhere("endTime > '$time'");
+		
+		/*$command = $connection->createCommand("select * from scheduling left join course
+			on scheduling.courseId = course.id	where course.open = 'ture' and scheduling.classId = '$classId'
+			and startTime < '$time' and endTime > '$time'");
+		$query = $command->queryAll();*/
+		
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
