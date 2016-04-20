@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
             ['class' => 'yii\grid\SerialColumn'],
 			'student',
             'courseName',
-            'courseResult',
 			array(
 				'label' => '消耗时间',
 				'format' => 'raw',

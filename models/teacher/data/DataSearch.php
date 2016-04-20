@@ -18,7 +18,7 @@ class DataSearch extends Data
     public function rules()
     {
         return [
-            [['courseName', 'courseResult', 'student'], 'safe'],
+            [['courseName', 'student'], 'safe'],
         ];
     }
 
@@ -63,7 +63,6 @@ class DataSearch extends Data
         ]);
 
         $query->andFilterWhere(['like', 'courseName', $this->courseName])
-            ->andFilterWhere(['like', 'courseResult', $this->courseResult])
             ->andFilterWhere(['like', 'student', $this->student]);
 
         return $dataProvider;

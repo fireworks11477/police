@@ -44,7 +44,9 @@ function abc(value){
 	   type:"GET",
 	   url:'index.php?r=Teacher/course/category&id='+value,
 	   dataType:'json',
-	   
+	   beforeSend: function() {
+            $("#loading").html('<section class="mod model-1"><div class="spinner"></div></section>');
+        },
 	   success:function(json){
 	    //alert(json);return false;
 			if(json == ''){return false;}
@@ -57,7 +59,7 @@ function abc(value){
 				}
 			str +='</select>';
 			$('#banji').html(str);
-			//$("#loading").html('');
+			$("#loading").html('');
 	   }
 	});
 	return false;

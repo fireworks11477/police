@@ -33,10 +33,10 @@ class Experiment extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'courseName' => '课程名称',
-            'courseResult' => '实验结果',
             'student' => '学生',
             'grade' => '评分',
 			'cost' => '消耗时间',
+			'courseId' => '实验结果'
         ];
     }
 	
@@ -55,6 +55,30 @@ class Experiment extends \yii\db\ActiveRecord
 				<input type="submit" value="修改" />
 			</form>';
 		}
+	}
+	
+	public function Abc($model){
+		$subject = (new \yii\db\Query())->from('subject')
+			->where('courseId='.($model->courseId))->all();
+		$count = count($subject);
+		$str = '';
+		for($i=0;$i<$count;$i++){
+			$str .= '试题'.($i+1).':&nbsp; &nbsp;'.$subject[$i]['title'].'<br>';
+			$result = (new \yii\db\Query())->from('answer')
+			->where('gradeId='.($model->id))->andwhere('titleId='.($i+1))->one();
+			$str .= '回答:&nbsp; &nbsp; &nbsp;'.$result['result'];
+			if($subject[$i]['choice'] == 'ture'){
+				if($result['result'] == 'A'){
+					$str .= ':'.$subject[$i]['A'];
+				}elseif($result['result'] == 'B'){
+					$str .= ':'.$subject[$i]['B'];
+				}elseif($result['result'] == 'C'){
+					$str .= ':'.$subject[$i]['C'];
+				}
+			}
+			$str .= '<br />';
+		}
+		return $str;
 	}
 	
 	public function Cost($model){

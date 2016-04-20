@@ -19,7 +19,7 @@ class CourseSearch extends Course
     {
         return [
             [['id', 'courseId', 'studentId', 'grade'], 'integer'],
-            [['courseName', 'courseResult', 'student'], 'safe'],
+            [['courseName',  'student'], 'safe'],
         ];
     }
 

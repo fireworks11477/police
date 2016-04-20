@@ -64,6 +64,8 @@ class DataController extends AdminCommonController
     
     public function actionDelete($id)
     {
+		$connection = Yii::$app->db;
+		$connection->createCommand()->delete('answer', 'gradeId = ' . $id)->execute();
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

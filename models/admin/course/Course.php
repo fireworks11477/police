@@ -40,13 +40,36 @@ class Course extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => '试题内容',
             'name' => '课程名称',
             'teacher' => '授课教师',
-            'content' => '课程内容',
+            'content' => '课程介绍',
             'open' => '课程状态',
         ];
     }
+	
+	public function Abc($model){
+		$subject = (new \yii\db\Query())->from('subject')
+			->where('courseId='.($model->id))->all();
+		$count = count($subject);
+		$str = '<a href="index.php?r=Admin/subject/create&id='.$model->id.'">
+			<span class="glyphicon glyphicon-plus"></span>添加试题</a><br><br>';
+		for($i=0;$i<$count;$i++){
+			$str .= '试题'.($i+1).':&nbsp; &nbsp;'.$subject[$i]['title'].'<br>';
+			if($subject[$i]['choice'] == 'ture'){
+				$str .= 'A:'.$subject[$i]['A'].'<br>';
+				$str .= 'B:'.$subject[$i]['B'].'<br>';
+				$str .= 'C:'.$subject[$i]['C'].'<br>';
+			}
+			$str .= '<a href="index.php?r=Admin/subject/update&id='.$subject[$i]['id'].'&iid='.$model->id.'">
+				<span class="glyphicon glyphicon-pencil"></span>修改试题</a>';
+			$str .= '&nbsp; &nbsp; ';
+			$str .= '<a href="index.php?r=Admin/subject/delete&id='.$subject[$i]['id'].'&iid='.$model->id.'">
+				<span class="glyphicon glyphicon-trash"></span>删除试题</a>';
+			$str .= '<br /><br />';
+		}
+		return $str;
+	}
 	
 	public function Open($model)
 	{

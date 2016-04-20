@@ -28,12 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'courseName',
-            'courseResult',
             'student',
             [
+				'attribute' => 'id',
+				'format' => 'raw',
+				'value' => $model->Abc($model)
+			],
+			[
 				'attribute' => 'grade',
 				'format' => 'raw',
-				'value'=> $model->Grade($model),
+				'value' => $model->Grade($model)
 			],
 			[
 				'attribute' => 'cost',

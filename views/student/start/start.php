@@ -30,28 +30,69 @@ function studyTime()
 当前已开始: &nbsp;<span id="HOUR"></span>小时<span id="MINUTE"></span>分钟<span id="SECOND"></span>秒
 <br /><br />
 
+<?php $count = count($result); ?>
 
-<form action="index.php?r=Student/start/create&id=<?= $open['id'] ?>&time=<?= $time ?>" method="post">
+共有试题：<?= $count ?>
+<br />
+
+
+<?php $subjectid = isset($subjectid) ? $subjectid : 1; ?>
+<?php $gradeId = isset($gradeId) ? $gradeId : 1000; ?>
+<?php $dangqian = $subjectid-1; ?>
+
+<form action="index.php?r=Student/start/create&id=<?= $open['id'] ?>&time=<?= $time ?>
+		&subjectid= <?= $subjectid ?>&gradeId= <?= $gradeId ?>" method="post">
 	
 	<div class="input-group">
-	  <label>实验内容：</label>
-	  <div> &nbsp; &nbsp; <?= $open['content'] ?></div>
+	  <label>试题<?= $subjectid ?></label>
+	  <div> &nbsp; &nbsp; <?= $result[($dangqian)]['title'] ?></div>
 	</div>
 	<br/>
 	
-	<div class="input-group">
-	  <span class="input-group-addon"></span>
-	  <textarea type="text" name="result" class="form-control"></textarea>
-	</div>
-	<br/>
-	
-	<div class="btn-group">
-	  <input type="submit" class="form-control"	value="提交">
-	</div>
+	<?php if($result[($dangqian)]['choice'] == 'ture'){ ?>
+		<input type="radio" name="result" value="A"/>A:<?= $result[($dangqian)]['A'] ?><br>
+		<input type="radio" name="result" value="B"/>B:<?= $result[($dangqian)]['B'] ?><br>
+		<input type="radio" name="result" value="C"/>C:<?= $result[($dangqian)]['C'] ?><br><br>
+	<?php }else{ ?>
+		<div class="input-group">
+		  <span class="input-group-addon"></span>
+		  <textarea type="text" name="result" class="form-control"></textarea>
+		</div>
+		<br/>
+	<?php } ?>
+	<?php if($subjectid != 1){ ?>
+		<div class="btn-group">
+			<a href="index.php?r=Student/start/create&id=<?= $open['id'] ?>&time=<?= $time ?>
+			&subjectid= <?= ($subjectid-1) ?>&gradeId= <?= $gradeId ?>&update=up" >上一题</button>
+		</div>
+	<?php } ?>	
+	<?php if($subjectid == $count){ ?>
+		<div class="btn-group">
+			<input type="submit" class="form-control" value="完成">
+		</div>
+	<?php }else{ ?>
+		<div class="btn-group">
+		  <input type="submit" class="form-control"	value="下一题">
+		</div>
+	<?php } ?>
 
 </form>
+
+
 
 
 <script type="text/javascript">
 studyTime();
 </script>
+
+<script>
+	function asd(){
+		
+	}
+
+</script>
+
+
+
+
+
