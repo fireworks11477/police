@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\student\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -16,6 +17,10 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
 
     <p>
         <?= Html::a('新增学生', ['create'], ['class' => 'btn btn-success']) ?>
+		<form action="index.php?r=Admin/student/excel" method="post" enctype="multipart/form-data">
+			<input  type="file" name="Student[id]" />
+			<input class="btn btn-primary" type="submit" value="导入Excel">
+		</form>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

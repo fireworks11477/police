@@ -7,10 +7,12 @@ $this->title = '开始实验';
 $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $open['name'];
 
+
+
 ?>
 <script type="text/javascript">
 var hour = 0, minute = 0, second = 0;
-var t = 0;
+var t = <?php $a = time()-$time; echo $a?>;
 var flag1;
 function studyTime()
 {
@@ -62,8 +64,8 @@ function studyTime()
 	<?php } ?>
 	<?php if($subjectid != 1){ ?>
 		<div class="btn-group">
-			<a href="index.php?r=Student/start/create&id=<?= $open['id'] ?>&time=<?= $time ?>
-			&subjectid= <?= ($subjectid-1) ?>&gradeId= <?= $gradeId ?>&update=up" >上一题</button>
+			<a onclick="asd()" id="asdf" class="btn btn-primary" href="index.php?r=Student/start/create&id=<?= $open['id'] ?>&time=<?= $time ?>
+			&subjectid= <?= ($subjectid-1) ?>&gradeId= <?= $gradeId ?>&update=up" >上一题</a>
 		</div>
 	<?php } ?>	
 	<?php if($subjectid == $count){ ?>
@@ -72,10 +74,9 @@ function studyTime()
 		</div>
 	<?php }else{ ?>
 		<div class="btn-group">
-		  <input type="submit" class="form-control"	value="下一题">
+		  <input type="submit" class="btn btn-success"	value="下一题">
 		</div>
 	<?php } ?>
-
 </form>
 
 
@@ -84,14 +85,6 @@ function studyTime()
 <script type="text/javascript">
 studyTime();
 </script>
-
-<script>
-	function asd(){
-		
-	}
-
-</script>
-
 
 
 

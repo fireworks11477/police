@@ -42,14 +42,10 @@ class StartSearch extends Start
     public function search($params,$classId)
     {
 		$time = time();
-		$subQuery = (new \yii\db\Query())->from('scheduling')
-			->where("classId = '$classId'")
-			->andwhere("startTime < '$time'")
-			->andwhere("endTime > '$time'")
-			->all();
-        $query = Start::find()->where("open = 'ture'")
+        $query = Start::find()
 			->leftJoin('scheduling', 'scheduling.courseId = course.id')
 			->where("classId = '$classId'")
+			->andwhere("course.open = 'ture'")
 			->andwhere("startTime < '$time'")
 			->andwhere("endTime > '$time'");
 		

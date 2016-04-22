@@ -44,6 +44,7 @@ AppAsset::register($this);
 				['label' => '系统参数设置', 'url' => ['/Admin/settings/index']],
 				['label' => '实验课程管理', 'url' => ['/Admin/course/index']],
 				['label' => '数据统计分析', 'url' => ['/Admin/data/index']],
+				['label' => '疑问与反馈', 'url' => ['/Admin/feedback/index']],
 			],
 		]);
 		echo Nav::widget([

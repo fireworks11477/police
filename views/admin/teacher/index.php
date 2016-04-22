@@ -16,6 +16,10 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
 
     <p>
         <?= Html::a('新增教师', ['create'], ['class' => 'btn btn-success']) ?>
+		<form action="index.php?r=Admin/teacher/excel" method="post" enctype="multipart/form-data">
+			<input  type="file" name="Teacher[id]" />
+			<input class="btn btn-primary" type="submit" value="导入Excel">
+		</form>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

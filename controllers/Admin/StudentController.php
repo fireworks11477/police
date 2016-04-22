@@ -8,6 +8,7 @@ use app\models\admin\student\StudentSearch;
 use app\controllers\Common\AdminCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -28,23 +29,74 @@ class StudentController extends AdminCommonController
             ],
         ];
     }
-
+	public $enableCsrfValidation = false;
     /**
      * Lists all Student models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StudentSearch();
+		$searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-		//return $this->render('abc');
     }
 
+	public function actionExcel(){
+		if($_FILES['Student']['name']['id']){
+			$model = new Student();
+			$model->id = UploadedFile::getInstance($model,'id');
+			$model->id->saveAs('/vagrant/www/laboratory/web/'.$model->id->baseName.'.'.$model->id->extension);
+			$quanname = '/vagrant/www/laboratory/web/'.$model->id->baseName.'.'.$model->id->extension;
+			$oldsrc = './'.$model->id->baseName.'.'.$model->id->extension;
+			$houzhui = $model->id->extension;
+			if($houzhui == 'xlsx' or $houzhui == 'xls' or $houzhui == 'csv'){
+				$objPHPExcel = \PHPExcel_IOFactory::load($oldsrc);
+				$sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+				$connection = Yii::$app->db;
+				unset($sheetData[1]);
+				foreach($sheetData as $v){
+					$c = (new \yii\db\Query())->from('department')
+						->where("department='".$v['C']."'")->one();
+					if($c){
+						$v['C'] = $c['id'];
+					}
+					$d = (new \yii\db\Query())->select(['id'])->from('class')
+						->where("class='".$v['D']."'")->andwhere("departmentId ='".$v['C']."'")->one();
+					if($d){
+						$v['D'] = $d['id'];
+					}
+					$result = (new \yii\db\Query())->select(['id'])->from('student')
+					->where('number='.$v['A'])->one();
+					if($result){
+						$connection->createCommand()->update('student', 
+							['name'=>$v['B'],'department'=>$v['C'],'class'=>$v['D']],
+							"number ='".($v['A'])."'")->execute();
+					}else{
+						$connection->createCommand()->insert('student', [
+						'number' => ($v['A']),
+						'name' => ($v['B']),
+						'department' => ($v['C']),
+						'class' => ($v['D']),
+						'open' => 'ture',
+						'password' => md5('123')
+						])->execute();
+					}
+				}
+				unlink($quanname);
+				return $this->redirect(['index']);
+			}else{
+				unlink($quanname);
+				echo '<script>alert("文件格式不对！(仅限.xls,.xlsx,.csv文件)");
+					window.location.href="index.php?r=Admin/student/index"</script>';exit;
+			}
+		}else{
+			return $this->redirect(['index']);
+		}			
+	}
     /**
      * Displays a single Student model.
      * @param integer $id

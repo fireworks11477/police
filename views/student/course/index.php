@@ -18,8 +18,6 @@ $this->params['breadcrumbs'][] = ['label' => ($this->title), 'url' => ['index']]
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'courseName',
             'student',
 			array(

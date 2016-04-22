@@ -8,6 +8,7 @@ use app\models\admin\teacher\TeacherSearch;
 use app\controllers\Common\AdminCommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 
 class TeacherController extends AdminCommonController
@@ -26,7 +27,7 @@ class TeacherController extends AdminCommonController
             ],
         ];
     }
-
+	public $enableCsrfValidation = false;
     /**
      * Lists all Teacher models.
      * @return mixed
@@ -41,7 +42,49 @@ class TeacherController extends AdminCommonController
             'dataProvider' => $dataProvider,
         ]);
     }
-
+	
+	public function actionExcel(){
+		if($_FILES['Teacher']['name']['id']){
+			$model = new Teacher();
+			$model->id = UploadedFile::getInstance($model,'id');
+			$model->id->saveAs('/vagrant/www/laboratory/web/'.$model->id->baseName.'.'.$model->id->extension);
+			$quanname = '/vagrant/www/laboratory/web/'.$model->id->baseName.'.'.$model->id->extension;
+			$oldsrc = './'.$model->id->baseName.'.'.$model->id->extension;
+			$houzhui = $model->id->extension;
+			if($houzhui == 'xlsx' or $houzhui == 'xls' or $houzhui == 'csv'){
+				$objPHPExcel = \PHPExcel_IOFactory::load($oldsrc);
+				$sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+				$connection = Yii::$app->db;
+				unset($sheetData[1]);
+				foreach($sheetData as $v){
+					$result = (new \yii\db\Query())->select(['id'])->from('teacher')
+					->where('id='.$v['A'])->one();
+					if($result){
+						$connection->createCommand()->update('teacher', 
+							['name'=>$v['B'],'username'=>$v['C']],
+							"id ='".($v['A'])."'")->execute();
+					}else{
+						$connection->createCommand()->insert('teacher', [
+						'id' => ($v['A']),
+						'name' => ($v['B']),
+						'username' => ($v['C']),
+						'open' => 'ture',
+						'password' => md5('123')
+						])->execute();
+					}
+				}
+				unlink($quanname);
+				return $this->redirect(['index']);
+			}else{
+				unlink($quanname);
+				echo '<script>alert("文件格式不对！(仅限.xls,.xlsx,.csv文件)");
+					window.location.href="index.php?r=Admin/teacher/index"</script>';exit;
+			}
+		}else{
+			return $this->redirect(['index']);
+		}			
+	}
+	
     /**
      * Displays a single Teacher model.
      * @param integer $id
